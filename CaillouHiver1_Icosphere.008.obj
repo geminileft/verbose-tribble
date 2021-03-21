@@ -1,25 +1,6 @@
 # Blender v2.72 (sub 0) OBJ File: 'BlenderNatureAsset.blend'
 # www.blender.org
 mtllib BlenderNatureAsset.mtl
-usemtl Material.007
-s off
-usemtl Material.007
-s off
-usemtl Material.007
-s off
-usemtl Material.007
-s off
-usemtl Material.007
-s off
-usemtl Material.008
-s off
-usemtl Material.009
-usemtl Material.008
-s off
-usemtl Material.009
-usemtl snow
-usemtl Material.007
-s off
 v 0.009284404761904064 -0.028327 0.005295809523809147
 v 0.26670440476190427 -0.028069 0.1798088095238093
 v -0.08439059523809589 -0.032688 0.28050780952380894

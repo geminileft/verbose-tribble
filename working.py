@@ -39,10 +39,12 @@ def output_obj_data(name, vertices, faces, obj_face_extra):
         mapped_vertices[vertex] = i
         i += 1
 
-    for face_extra in obj_face_extra:
-        output_lines.append(face_extra)
-        header_lines.append(face_extra)
+    face_index = 1
     for face_data in faces:
+        if face_index in obj_face_extra:
+            for face_extra in obj_face_extra[face_index]:
+                output_lines.append(face_extra)
+        face_index += 1
         new_face_data = []
         for face_vertex in face_data:
             vertex_index = int(face_vertex)
@@ -62,9 +64,9 @@ with open(filename) as f:
 
 obj_name = None
 obj_faces = []
-obj_face_extra = []
+obj_face_extra = {}
 obj_vertices = set()
-
+face_index = 1
 for line in lines:
     fields = line.split(" ")
     field_type = fields[0]
@@ -75,7 +77,12 @@ for line in lines:
         header_lines.append(line)
         print('{} {}'.format(fields[0],fields[1]))
     elif field_type == 'usemtl' or field_type == 's':
-        obj_face_extra.append(line)
+        if face_index not in obj_face_extra:
+            extras = []
+        else:
+            extras = obj_face_extra[face_index]
+        extras.append(line)
+        obj_face_extra[face_index] = extras
         print('{} {}'.format(fields[0],fields[1]))
     elif field_type == 'o':
         if obj_name is not None:
@@ -84,12 +91,14 @@ for line in lines:
         obj_vertices.clear()
         obj_faces.clear()
         obj_face_extra.clear()
+        face_index = 1
         print('start of obj definition: {}'.format(line))
     elif field_type == 'f':
         print('face: {}'.format(line))
         obj_faces.append(fields[1:])
         for face_vertex_index in fields[1:]:
             obj_vertices.add(int(face_vertex_index))
+        face_index += 1
     elif field_type == 'v':
         all_vertices.append(line)
     else:
